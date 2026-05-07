@@ -159,6 +159,12 @@ p {
   overflow: hidden;
 }
 
+.video-card video {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
 .video-info {
   padding: 15px;
 }
