@@ -1,0 +1,193 @@
+/* Haptic Teleoperation Modern Styling */
+:root {
+  --primary-color: #1772d0;
+  --hover-color: #f09228;
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --secondary-bg: #f9f9f9;
+  --accent-bg: #eef6ff;
+  --font-main: 'Lato', Verdana, Helvetica, sans-serif;
+  --border-color: #eeeeee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--hover-color);
+}
+
+h1, h2, h3 {
+  font-weight: 400;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  margin-top: 50px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 1.5em;
+  text-align: justify;
+}
+
+/* Nav */
+.nav-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.9);
+  padding: 10px 0;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
+
+.pill {
+  padding: 6px 15px;
+  border-radius: 20px;
+  background: var(--secondary-bg);
+  font-size: 13px;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.pill:hover {
+  background: var(--accent-bg);
+  border-color: var(--primary-color);
+}
+
+/* Grids */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  padding: 20px;
+  background: var(--secondary-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.media-container {
+  margin: 20px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.media-container img, .media-container video {
+  width: 100%;
+  display: block;
+}
+
+.caption {
+  padding: 10px;
+  font-size: 13px;
+  color: #666;
+  background: #fff;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+/* Video Grid */
+.video-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.video-card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.video-info {
+  padding: 15px;
+}
+
+.video-info b {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.video-info span {
+  font-size: 13px;
+  color: #666;
+}
+
+pre {
+  background: #2d2d2d;
+  color: #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  overflow-x: auto;
+}
+
+footer {
+  margin-top: 80px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+}
