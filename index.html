@@ -1,140 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haptic Teleoperation & LfD | Nil Biescas</title>
-    <meta name="description" content="Teleoperation of a Franka Panda with a Falcon haptic device and Learning from Demonstration (LfD) using GMM/GMR and TP-GMM.">
-    <link rel="stylesheet" href="stylesheet.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haptic Teleoperation &amp; LfD | Nil Biescas</title>
+  <meta name="description" content="Teleoperation of a Franka Panda with a Falcon haptic device and Learning from Demonstration (LfD) using GMM/GMR and TP-GMM.">
+  <link rel="stylesheet" href="stylesheet.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container">
-        <!-- Navigation -->
-        <nav class="nav-pills">
-            <a href="#intro" class="pill">Introduction</a>
-            <a href="#remote" class="pill">Remote Control</a>
-            <a href="#lfd" class="pill">LfD</a>
-            <a href="#videos" class="pill" style="font-weight: bold; color: var(--primary-color);">Videos</a>
-            <a href="#conclusion" class="pill">Conclusion</a>
-            <a href="https://nilbiescas.github.io/" class="pill">Back to Home</a>
-        </nav>
+  <div class="layout">
+    <aside>
+      <a class="back" href="https://nilbiescas.github.io/">← Nil Biescas</a>
+      <div class="kicker">Project</div>
+      <p class="title">Haptic Teleoperation &amp; Learning from Demonstration</p>
+      <p class="people"><strong>Nil Biescas</strong>, Yisheng Sun, Qingping Hu</p>
+      <div class="tags"><span class="venue">2025</span><span>Franka Panda</span><span>ROS</span><span>GMM</span></div>
+      <nav>
+        <a href="#intro" class="active"><small>01</small>Introduction</a>
+        <a href="#remote"><small>02</small>Remote control</a>
+        <a href="#lfd"><small>03</small>Learning from demonstration</a>
+        <a href="#videos"><small>04</small>Videos</a>
+      </nav>
+      <div class="cta">
+        <a class="primary" href="#videos">Watch the videos</a>
+        <a href="https://nilbiescas.github.io/">Back to home</a>
+      </div>
+    </aside>
 
-        <header>
-            <h1>Haptic Teleoperation and Learning from Demonstration with the Franka Robotic Arm</h1>
-            <p style="font-size: 18px; color: #666; margin-bottom: 40px;">
-                A research project exploring real-time robotic control using haptic devices and trajectory learning via Gaussian Mixture Models.
-            </p>
-        </header>
+    <main>
+      <div class="hero">
+        <img src="assets/images/haptic_image.png" alt="Haptic teleoperation of a Franka Panda">
+        <video muted loop playsinline preload="none" src="assets/videos/video1.mp4"></video>
+        <span class="hint">Hover to play</span>
+      </div>
 
-        <!-- Intro -->
-        <section id="intro">
-            <h2>Introduction</h2>
-            <div class="section-grid">
-                <div class="card">
-                    <h3>Remote Control</h3>
-                    <p>Real-time control of a robot using a haptic device allows humans to perform precise tasks in remote or hazardous environments, such as surgery or search and rescue.</p>
-                </div>
-                <div class="card">
-                    <h3>Learning from Demonstration</h3>
-                    <p>Robots can learn complex manipulation tasks from human demonstrations, enabling them to generalize trajectories to new, dynamic situations without manual programming.</p>
-                </div>
+      <h1>Haptic Teleoperation and Learning from Demonstration with the Franka Robotic Arm</h1>
+      <p class="lede">A research project exploring real-time robotic control using haptic devices and trajectory learning via Gaussian Mixture Models.</p>
+
+      <section id="intro">
+        <div class="sec-head"><span>01</span><h2>Introduction</h2></div>
+        <div class="cols">
+          <div class="panel">
+            <div class="icon">⇄</div>
+            <h3>Remote control</h3>
+            <p>Real-time control of a robot using a haptic device allows humans to perform precise tasks in remote or hazardous environments, such as surgery or search and rescue.</p>
+          </div>
+          <div class="panel">
+            <div class="icon">↻</div>
+            <h3>Learning from demonstration</h3>
+            <p>Robots can learn complex manipulation tasks from human demonstrations, enabling them to generalize trajectories to new, dynamic situations without manual programming.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="remote">
+        <div class="sec-head"><span>02</span><h2>Remote control</h2></div>
+        <div class="cols">
+          <div class="panel flush">
+            <figure>
+              <img src="assets/images/system_connection_overview.png" alt="System connection overview">
+              <figcaption>ROS-based system connection diagram.</figcaption>
+            </figure>
+            <div class="pad">
+              <h3>System architecture</h3>
+              <p>The system connects two PCs via ROS. PC1 handles the Falcon haptic device, while PC2 runs the control node that talks to the Franka Panda over TCP/IP.</p>
+              <div class="pipeline"><span>PC1 · Falcon</span><i>→</i><span>ROS</span><i>→</i><span>PC2 · Control</span><i>→</i><span>Franka Panda</span></div>
             </div>
-        </section>
+          </div>
+          <div class="panel">
+            <h3>Control &amp; feedback</h3>
+            <p>We implemented <strong>Cartesian Impedance Control</strong> for both position and orientation. Orientation error is handled via quaternion-based calculations.</p>
+            <h3 style="margin-top:20px">Force feedback</h3>
+            <p>Instead of a dedicated sensor, we estimate the external wrench from the robot’s internal state. A threshold filter reduces noise before the feedback is sent to the haptic device.</p>
+            <h3 style="margin-top:20px">Workspace &amp; gripper</h3>
+            <p><strong>Clutch strategy:</strong> holding a button enables motion, so the small Falcon workspace can be mapped onto the much larger robot workspace.</p>
+            <p><strong>Gripper:</strong> managed via <code>franka_gripper</code>, with button mappings for open, close and grasp.</p>
+          </div>
+        </div>
 
-        <!-- Remote Control -->
-        <section id="remote">
-            <h2>Remote Control</h2>
-            <div class="section-grid">
-                <div>
-                    <h3>System Architecture</h3>
-                    <p>The system connects two PCs via ROS. PC1 handles the Falcon haptic device, while PC2 manages the control node communicating with the Franka Panda via TCP/IP.</p>
-                    <pre><code>PC1 (Falcon) → ROS → PC2 (Control) → Franka Panda</code></pre>
-                    <div class="media-container">
-                        <img src="assets/images/system_connection_overview.png" alt="System Connection Overview">
-                        <div class="caption">ROS-based system connection diagram.</div>
-                    </div>
-                </div>
-                <div>
-                    <h3>Control & Feedback</h3>
-                    <p>We implemented <strong>Cartesian Impedance Control</strong> for both position and orientation. Orientation error is handled via quaternion-based calculations.</p>
-                    <div class="media-container">
-                        <img src="assets/images/haptic_image.png" alt="Haptic Teleoperation">
-                        <div class="caption">Real-time haptic teleoperation setup.</div>
-                    </div>
-                </div>
+        <div class="flows">
+          <div class="flow">
+            <img src="assets/images/position_control.png" alt="Position control data flow">
+            <div><b>Position</b>Velocity <i>v</i> on <code>LFcommand</code></div>
+          </div>
+          <div class="flow">
+            <img src="assets/images/orientation_control.png" alt="Orientation control data flow">
+            <div><b>Orientation</b>Angular velocity ω on <code>OFcommand</code></div>
+          </div>
+          <div class="flow">
+            <img src="assets/images/force_feedback.png" alt="Force feedback data flow">
+            <div><b>Force feedback</b>Estimated wrench <i>F</i> on <code>FLfeedback</code></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="lfd">
+        <div class="sec-head"><span>03</span><h2>Learning from demonstration</h2></div>
+        <div class="cols">
+          <div class="panel flush">
+            <figure>
+              <img src="assets/images/lfd_gmm_learning.png" alt="GMM learning">
+              <figcaption>GMM learning using Expectation-Maximization.</figcaption>
+            </figure>
+            <div class="pad">
+              <h3>GMM &amp; GMR</h3>
+              <p>We model the joint distribution <code>P(x, v)</code> with <strong>Gaussian Mixture Models</strong>. Trajectories are reproduced with <strong>Gaussian Mixture Regression</strong>, conditioning on the current position.</p>
             </div>
-
-            <div class="section-grid" style="margin-top: 30px;">
-                <div>
-                    <h3>Force Feedback</h3>
-                    <p>Instead of a dedicated sensor, we estimated external wrench from the robot's internal state. A threshold filter was applied to reduce noise before sending haptic feedback.</p>
-                    <div class="media-container">
-                        <img src="assets/images/force_feedback.png" alt="Force Feedback">
-                        <div class="caption">Estimated external wrench feedback.</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>Workspace & Gripper</h3>
-                    <p><strong>Clutch Strategy:</strong> Hold a button to enable motion, allowing the small Falcon workspace to map to the large robot workspace.</p>
-                    <p><strong>Gripper:</strong> Managed via <code>franka_gripper</code> with specific button mappings for open, close, and grasp actions.</p>
-                </div>
+          </div>
+          <div class="panel flush">
+            <figure>
+              <img src="assets/images/lfd_tp_gmm_experiment.png" alt="TP-GMM experiment">
+              <figcaption>Generalization experiment with 8 demonstrations.</figcaption>
+            </figure>
+            <div class="pad">
+              <h3>Task-Parameterized GMM</h3>
+              <p>TP-GMM generalizes demonstrations across reference frames (task parameters), improving extrapolation when the environment changes.</p>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- LfD -->
-        <section id="lfd">
-            <h2>Learning from Demonstration</h2>
-            <div class="section-grid">
-                <div>
-                    <h3>GMM & GMR</h3>
-                    <p>We model the joint distribution <code>P(x, v)</code> using <strong>Gaussian Mixture Models</strong>. Trajectory reproduction is then achieved via <strong>Gaussian Mixture Regression</strong>, conditioning on the current position.</p>
-                    <div class="media-container">
-                        <img src="assets/images/lfd_gmm_learning.png" alt="GMM Learning">
-                        <div class="caption">GMM learning using Expectation-Maximization.</div>
-                    </div>
-                </div>
-                <div>
-                    <h3>Task-Parameterized GMM</h3>
-                    <p>TP-GMM allows the robot to generalize demonstrations to different reference frames (task parameters), improving extrapolation in changing environments.</p>
-                    <div class="media-container">
-                        <img src="assets/images/lfd_tp_gmm_experiment.png" alt="TP-GMM Experiment">
-                        <div class="caption">Generalization experiment with 8 demonstrations.</div>
-                    </div>
-                </div>
+      <section id="videos">
+        <div class="sec-head"><span>04</span><h2>Videos</h2></div>
+        <div class="videos">
+          <div class="panel flush">
+            <video controls preload="metadata" src="assets/videos/video1.mp4"></video>
+            <div class="pad">
+              <h3>Teleoperation result</h3>
+              <p>Grasping objects with position and orientation control.</p>
             </div>
-        </section>
-
-        <!-- Videos -->
-        <section id="videos">
-            <h2>Videos</h2>
-            <div class="video-grid">
-                <div class="video-card">
-                    <video controls preload="metadata">
-                        <source src="assets/videos/video1.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-info">
-                        <b>Video 1: Teleoperation Result</b>
-                        <span>Grasping objects with position and orientation control.</span>
-                    </div>
-                </div>
-                <div class="video-card">
-                    <video controls preload="metadata">
-                        <source src="assets/videos/video4.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-info">
-                        <b>Video 4: Results Overview</b>
-                        <span>Summary of remote control and learning outcomes.</span>
-                    </div>
-                </div>
+          </div>
+          <div class="panel flush">
+            <video controls preload="metadata" src="assets/videos/video4.mp4"></video>
+            <div class="pad">
+              <h3>Results overview</h3>
+              <p>Summary of remote control and learning outcomes.</p>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <footer id="conclusion">
-            <p>Project by Nil Biescas, Yisheng Sun, & Qingping Hu.</p>
-            <p>© 2025 Nil Biescas. Template inspired by Jon Barron.</p>
-        </footer>
-    </div>
+      <footer>
+        <span>Project by Nil Biescas, Yisheng Sun &amp; Qingping Hu.</span>
+        <span>© 2025 Nil Biescas</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const hero = document.querySelector('.hero');
+    const heroVideo = hero.querySelector('video');
+    hero.addEventListener('mouseenter', () => heroVideo.play());
+    hero.addEventListener('mouseleave', () => { heroVideo.pause(); heroVideo.currentTime = 0; });
+
+    const navLinks = [...document.querySelectorAll('aside nav a')];
+    const targets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
+    addEventListener('scroll', () => {
+      let i = 0;
+      targets.forEach((t, k) => { if (t.getBoundingClientRect().top < 160) i = k; });
+      if (innerHeight + scrollY >= document.body.scrollHeight - 4) i = targets.length - 1;
+      navLinks.forEach((a, k) => a.classList.toggle('active', k === i));
+    }, { passive: true });
+  </script>
 </body>
 </html>
